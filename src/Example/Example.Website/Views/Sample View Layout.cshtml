@@ -1,0 +1,15 @@
+﻿@using Sitecore.Mvc
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Html.Sitecore().CurrentItem.DisplayName</title>
+</head>
+<body>
+    <div id="MainPanel">
+        <h1>@Html.Sitecore().CurrentItem.DisplayName</h1>
+        @Html.Sitecore().Placeholder("content")
+    </div>
+</body>
+</html>
