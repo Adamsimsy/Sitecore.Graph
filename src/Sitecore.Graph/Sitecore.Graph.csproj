@@ -77,8 +77,10 @@
     <Compile Include="Database\ISitecoreGraph.cs" />
     <Compile Include="Database\SitecoreGraph.cs" />
     <Compile Include="LinkDatabase\CustomLinkDatabase.cs" />
-    <Compile Include="LinkDatabase\CustomLinkManager.cs" />
+    <Compile Include="LinkDatabase\GraphLinkManager.cs" />
     <Compile Include="LinkDatabase\ICustomLinkManager.cs" />
+    <Compile Include="LinkDatabase\ILinkDatabaseFactory.cs" />
+    <Compile Include="LinkDatabase\LinkDatabaseFactory.cs" />
     <Compile Include="Models\SitecoreNode.cs" />
     <Compile Include="Models\SitecoreRelationship.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
