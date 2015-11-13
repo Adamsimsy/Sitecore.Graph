@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Graph", "src\Sitec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Graph.Website", "src\Sitecore.Graph.Website\Sitecore.Graph.Website.csproj", "{8DD68A35-84B5-44B6-89BF-6B1D0C2DA7A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{565772E0-B9C9-46FE-BE14-469A16AC1FBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Graph.Tests", "src\Sitecore.Graph.Tests\Sitecore.Graph.Tests.csproj", "{E0DBB206-AB95-473C-9A4E-F69D807CAD5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{8DD68A35-84B5-44B6-89BF-6B1D0C2DA7A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD68A35-84B5-44B6-89BF-6B1D0C2DA7A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DD68A35-84B5-44B6-89BF-6B1D0C2DA7A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0DBB206-AB95-473C-9A4E-F69D807CAD5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0DBB206-AB95-473C-9A4E-F69D807CAD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0DBB206-AB95-473C-9A4E-F69D807CAD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0DBB206-AB95-473C-9A4E-F69D807CAD5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,5 +59,6 @@ Global
 		{69D2389E-D43F-413B-80F6-C047BD780547} = {DDDFA5E4-B179-4041-85A7-498D6402A0E6}
 		{13A4F79C-CC2E-416D-8D0B-DD95F7BF0696} = {DDDFA5E4-B179-4041-85A7-498D6402A0E6}
 		{4416DE2B-0633-4198-BD3B-8CA36A66A4C6} = {DDDFA5E4-B179-4041-85A7-498D6402A0E6}
+		{E0DBB206-AB95-473C-9A4E-F69D807CAD5B} = {565772E0-B9C9-46FE-BE14-469A16AC1FBE}
 	EndGlobalSection
 EndGlobal

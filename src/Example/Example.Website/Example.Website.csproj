@@ -65,7 +65,7 @@
       <HintPath>..\..\..\lib\Sitecore.ContentSearch.SolrProvider.CastleWindsorIntegration.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\lib\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\lib\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
