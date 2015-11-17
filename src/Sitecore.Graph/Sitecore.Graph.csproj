@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Database\ISitecoreGraph.cs" />
     <Compile Include="Database\SitecoreGraph.cs" />
+    <Compile Include="ItemHelper.cs" />
     <Compile Include="LinkDatabase\CustomLinkDatabase.cs" />
     <Compile Include="LinkDatabase\GraphLinkManager.cs" />
     <Compile Include="LinkDatabase\ICustomLinkManager.cs" />

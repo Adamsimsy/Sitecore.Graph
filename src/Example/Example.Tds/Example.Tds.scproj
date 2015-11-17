@@ -27,10 +27,10 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>.\bin\Debug\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
-    <SitecoreWebUrl>http://sitecore.dependency.injection/</SitecoreWebUrl>
+    <SitecoreWebUrl>http://sitecorelinkeddata/</SitecoreWebUrl>
     <InstallSitecoreConnector>True</InstallSitecoreConnector>
     <DisableFileDeployment>False</DisableFileDeployment>
-    <SitecoreDeployFolder>D:\Sitecore\Instances\sitecore.dependency.injection\Website</SitecoreDeployFolder>
+    <SitecoreDeployFolder>D:\Sitecore\Instances\sitecorelinkeddata\Website</SitecoreDeployFolder>
     <SitecoreAccessGuid>051c56e7-1781-4f9e-ae22-cc6aa0a16384</SitecoreAccessGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

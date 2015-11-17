@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Graph.Database;
+using Sitecore.Graph.Models;
 using Sitecore.Links;
 
 namespace Sitecore.Graph.LinkDatabase
@@ -10,9 +15,9 @@ namespace Sitecore.Graph.LinkDatabase
     {
         private readonly ISitecoreGraph _graph;
 
-        public GraphLinkManager(ISitecoreGraph graph)
+        public GraphLinkManager()
         {
-            _graph = graph;
+            _graph = new SitecoreGraph();
         }
 
         public void Compact(Data.Database database)
@@ -22,42 +27,162 @@ namespace Sitecore.Graph.LinkDatabase
 
         public ItemLink[] GetBrokenLinks(Data.Database database)
         {
-            throw new NotImplementedException();
+            return new ItemLink[] {};
+        }
+
+        public ItemLink[] GetItemVersionReferrers(Item version)
+        {
+            return new ItemLink[] {};
         }
 
         public int GetReferenceCount(Item item)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull((object)item, "item");
+
+            //var items = _factory.GetContextLinkDatabaseDataManager(item).GetItemTriplesBySubject(item);
+
+            //if (items != null)
+            //{
+            //    return items.Count();
+            //}
+            return 0;
         }
 
         public ItemLink[] GetReferences(Item item)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull((object)item, "item");
+            List<ItemLink> list = new List<ItemLink>();
+
+
+                //var items = _factory.GetContextLinkDatabaseDataManager(item).GetItemTriplesBySubject(item);
+
+                //list = SitecoreTripleHelper.TriplesToItemLinks(items);
+
+            return list.ToArray();
         }
 
         public int GetReferrerCount(Item item)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull((object)item, "item");
+
+            //var items = _factory.GetContextLinkDatabaseDataManager(item).GetItemTriplesByObject(item);
+
+            //if (items != null)
+            //{
+            //    return items.Count();
+            //}
+            return 0;
         }
 
         public ItemLink[] GetReferrers(Item item)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull((object)item, "item");
+            List<ItemLink> list = new List<ItemLink>();
+
+                //var items = _factory.GetContextLinkDatabaseDataManager(item).GetItemTriplesByObject(item);
+
+                //list = SitecoreTripleHelper.TriplesToItemLinks(items);
+
+            return list.ToArray();
+        }
+
+        public ItemLink[] GetReferrers(Item item, ID sourceFieldId)
+        {
+            return new ItemLink[] { };
         }
 
         public ItemLink[] GetReferrers(Item item, bool deep)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull((object)item, "item");
+            //if (!deep)
+            //    return this.GetReferrers(item);
+            //else
+            //    return this.GetHTMLReferersDeep(item);
+
+            return new ItemLink[] {};
+        }
+
+        public void RemoveItemVersionLink(ItemLink itemLink)
+        {
+        }
+
+        public void RemoveItemVersionLinks(Item item)
+        {
         }
 
         public void RemoveReferences(Item item)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull((object)item, "item");
+
+            //foreach (var manager in _factory.GetContextSitecoreLinkedDataManagers(item))
+            //{
+            //    var items = manager.GetItemTriplesByObject(item);
+
+            //    manager.DeleteTriples(items);
+            //}
+        }
+
+        public void UpdateItemVersionLink(Item item, ItemLink[] contextitemLinks)
+        {
+            contextitemLinks.ToList().ForEach(x => this.Update(item, x));
+        }
+
+        public void UpdateItemVersionLinks(Item item, ItemLink[] links)
+        {
+            links.ToList().ForEach(x => this.Update(item, x));
         }
 
         public void UpdateLinks(Item item, ItemLink[] links)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull((object)item, "item");
+            Assert.ArgumentNotNull((object)links, "links");
+
+            links.ToList().ForEach(x => this.Update(item, x));
+
+            //var allLinks = _computedLinkManager.GetComputedLinkItems(item);
+
+            //allLinks.AddRange(links);
+
+            //foreach (var manager in _factory.GetContextSitecoreLinkedDataManagers(item))
+            //{
+            //    allLinks.ToList().ForEach(computedLink => manager.AddLink(item, computedLink));
+
+            //    //Now remove removed links
+            //    var oldLinks = GetReferences(item);
+            //    var removeLinks = new List<ItemLink>();
+
+            //    foreach (var link in oldLinks)
+            //    {
+            //        if (!allLinks.Where(x => x.TargetItemID.Guid == link.TargetItemID.Guid).Any())
+            //        {
+            //            removeLinks.Add(link);
+            //        }
+            //    }
+
+            //    foreach (var removeLink in removeLinks)
+            //    {
+            //        manager.RemoveLinksForItem(item, removeLink);
+            //    }
+            //}
+        }
+
+        public void Update(Item item, ItemLink link)
+        {
+            var node = _graph.ReadNode(ItemHelper.ItemToUri(item));
+
+            if (node != null)
+            {
+                node = _graph.CreateNode(new SitecoreNode() { Id = ItemHelper.ItemToUri(item), Name = item.Name });
+            }
+
+            var targetNode = _graph.ReadNode(ItemHelper.ItemToUri(link.GetTargetItem()));
+
+            if (targetNode != null)
+            {
+                targetNode = _graph.CreateNode(new SitecoreNode() { Id = ItemHelper.ItemToUri(link.GetTargetItem()), Name = item.Name });
+            }
+
+            _graph.CreateRelationship(node, new SitecoreRelationship(targetNode, "LinksTo"));
         }
     }
 }

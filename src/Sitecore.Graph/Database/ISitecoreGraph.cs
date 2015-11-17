@@ -10,6 +10,7 @@ namespace Sitecore.Graph.Database
 {
     public interface ISitecoreGraph
     {
+        NodeReference<SitecoreNode> ReadNode(string uri);
         NodeReference<SitecoreNode> CreateNode(SitecoreNode node);
         RelationshipReference CreateRelationship(NodeReference<SitecoreNode> nodeReference, SitecoreRelationship relationship);
     }

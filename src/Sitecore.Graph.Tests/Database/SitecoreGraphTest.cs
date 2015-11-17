@@ -23,7 +23,7 @@ namespace Sitecore.Graph.Tests.Database
 
             var client = new GraphClient(new Uri(url), user, password);
 
-            _graph = new SitecoreGraph(client);
+            _graph = new SitecoreGraph();
         }
 
         [Fact]

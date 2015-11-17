@@ -14,21 +14,52 @@ namespace Sitecore.Graph.Database
     {
         private readonly IGraphClient _graphClient;
 
-        public SitecoreGraph(IGraphClient graphClient)
+        public SitecoreGraph()
         {
-            _graphClient = graphClient;
+            //var graph = new SitecoreGraph(client);
 
-            _graphClient.Connect();
+            //_graphClient = client;
+        }
 
+        private IGraphClient CreateGraphClient()
+        {
+            //Use an IoC container and register as a Singleton
+            var url = "http://192.168.99.100:32769/db/data";
+            var user = "neo4j";
+            var password = "Password1!";
+
+            return new GraphClient(new Uri(url), user, password);
+        }
+
+        public NodeReference<SitecoreNode> ReadNode(string uri)
+        {
+            var client = CreateGraphClient();
+
+            client.Connect();
+
+            return client.Cypher
+                .Match("(m:Item)")
+                .Where("m.Uri == {uri}")
+                .WithParam("uri", uri)
+                .Return<NodeReference<SitecoreNode>>("m")
+                .Results.FirstOrDefault();
         }
 
         public NodeReference<SitecoreNode> CreateNode(SitecoreNode node)
         {
+            var client = CreateGraphClient();
+
+            client.Connect();
+
             return _graphClient.Create(node);
         }
 
         public RelationshipReference CreateRelationship(NodeReference<SitecoreNode> nodeReference, SitecoreRelationship relationship)
         {
+            var client = CreateGraphClient();
+
+            client.Connect();
+
             return _graphClient.CreateRelationship(nodeReference, relationship);
         }
     }

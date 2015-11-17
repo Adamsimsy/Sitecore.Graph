@@ -16,16 +16,9 @@ namespace Sitecore.Graph.LinkDatabase
 
         public LinkDatabaseFactory()
         {
-            //Use an IoC container and register as a Singleton
-            var url = "http://192.168.99.100:32769/db/data";
-            var user = "neo4j";
-            var password = "Password1!";
 
-            var client = new GraphClient(new Uri(url), user, password);
 
-            var graph = new SitecoreGraph(client);
-
-            _managers = new List<ICustomLinkManager>() { new GraphLinkManager(graph) };
+            _managers = new List<ICustomLinkManager>() { new GraphLinkManager() };
         }
 
         public ICustomLinkManager GetContextLinkManager()
