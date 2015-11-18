@@ -14,7 +14,7 @@ namespace Example.Website.App_Start
             //Register Controllers with WindsorContainer
             WindsorContainerContext.Instance.Install(new MvcControllersInstaller());
             //Register Services with WindsorContainer
-            WindsorContainerContext.Instance.Install(new ServicesInstaller());
+            //WindsorContainerContext.Instance.Install(new ServicesInstaller());
             //Initialise Solr with WindsorContainer
             //new WindsorSolrStartUp(WindsorContainerContext.Instance).Initialize();
         }

@@ -170,19 +170,19 @@ namespace Sitecore.Graph.LinkDatabase
         {
             var node = _graph.ReadNode(ItemHelper.ItemToUri(item));
 
-            if (node != null)
+            if (node == null)
             {
-                node = _graph.CreateNode(new SitecoreNode() { Id = ItemHelper.ItemToUri(item), Name = item.Name });
+                node = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(item), Name = item.Name });
             }
 
             var targetNode = _graph.ReadNode(ItemHelper.ItemToUri(link.GetTargetItem()));
 
-            if (targetNode != null)
+            if (targetNode == null)
             {
-                targetNode = _graph.CreateNode(new SitecoreNode() { Id = ItemHelper.ItemToUri(link.GetTargetItem()), Name = item.Name });
+                targetNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(link.GetTargetItem()), Name = item.Name });
             }
 
-            _graph.CreateRelationship(node, new SitecoreRelationship(targetNode, "LinksTo"));
+            //_graph.CreateRelationship(node, new SitecoreRelationship(targetNode, "LinksTo"));
         }
     }
 }

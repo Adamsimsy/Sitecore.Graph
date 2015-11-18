@@ -2,6 +2,7 @@ using Sitecore.DependencyInjection.ContainerContexts;
 using Sitecore.DependencyInjection.DependencyResolvers;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Example.Website.App_Start.Installers;
 
 namespace Example.Website
 {
@@ -10,6 +11,7 @@ namespace Example.Website
         protected void Application_Start()
         {
             RegisterRoutes(RouteTable.Routes);
+            WindsorContainerContext.Instance.Install(new ServicesInstaller());
         }
 
         private static void RegisterRoutes(RouteCollection routes)

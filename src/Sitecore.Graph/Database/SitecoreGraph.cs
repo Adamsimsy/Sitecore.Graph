@@ -19,46 +19,52 @@ namespace Sitecore.Graph.Database
             //var graph = new SitecoreGraph(client);
 
             //_graphClient = client;
+            _graphClient =
+                Sitecore.DependencyInjection.ContainerContexts.WindsorContainerContext.Instance.Resolve<IGraphClient>();
         }
 
         private IGraphClient CreateGraphClient()
         {
             //Use an IoC container and register as a Singleton
-            var url = "http://192.168.99.100:32769/db/data";
+            var url = "http://192.168.99.100:32768/db/data";
             var user = "neo4j";
             var password = "Password1!";
 
             return new GraphClient(new Uri(url), user, password);
         }
 
-        public NodeReference<SitecoreNode> ReadNode(string uri)
+        public SitecoreNode ReadNode(string uri)
         {
-            var client = CreateGraphClient();
+            //var client = CreateGraphClient();
 
-            client.Connect();
+            _graphClient.Connect();
 
-            return client.Cypher
-                .Match("(m:Item)")
-                .Where("m.Uri == {uri}")
+            return _graphClient.Cypher
+                .Match("(item:Item)")
+                .Where("item.Uri = {uri}")
                 .WithParam("uri", uri)
-                .Return<NodeReference<SitecoreNode>>("m")
+                .Return<SitecoreNode>("item")
                 .Results.FirstOrDefault();
         }
 
-        public NodeReference<SitecoreNode> CreateNode(SitecoreNode node)
+        public SitecoreNode CreateNode(SitecoreNode node)
         {
-            var client = CreateGraphClient();
+            _graphClient.Connect();
 
-            client.Connect();
+            var newNode = _graphClient.Cypher
+                .Create("(m:Item {node})")
+                .WithParam("node", node)
+                .Return<SitecoreNode>("m")
+                .Results.FirstOrDefault();
 
-            return _graphClient.Create(node);
+            return newNode;
         }
 
         public RelationshipReference CreateRelationship(NodeReference<SitecoreNode> nodeReference, SitecoreRelationship relationship)
         {
-            var client = CreateGraphClient();
+            //var client = CreateGraphClient();
 
-            client.Connect();
+            _graphClient.Connect();
 
             return _graphClient.CreateRelationship(nodeReference, relationship);
         }

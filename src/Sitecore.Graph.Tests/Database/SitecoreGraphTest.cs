@@ -29,16 +29,16 @@ namespace Sitecore.Graph.Tests.Database
         [Fact]
         public void Can_add_new_item_to_graph()
         {
-            var teamNode = _graph.CreateNode(new SitecoreNode() {Id = "1", Name = "Arsenal"});
-            var playerNode = _graph.CreateNode(new SitecoreNode() { Id = "2", Name = "Walcott" });
+            var teamNode = _graph.CreateNode(new SitecoreNode() { Uri = "1", Name = "Arsenal"});
+            var playerNode = _graph.CreateNode(new SitecoreNode() { Uri = "2", Name = "Walcott" });
 
-            var agentNode = _graph.CreateNode(new SitecoreNode() { Id = "3", Name = "Bloggs" });
+            var agentNode = _graph.CreateNode(new SitecoreNode() { Uri = "3", Name = "Bloggs" });
 
             var teamToPlayerRelationship = new SitecoreRelationship(new NodeReference(playerNode.Id), "TeamToPlayer");
-            _graph.CreateRelationship(teamNode, teamToPlayerRelationship);
+            //_graph.CreateRelationship(teamNode, teamToPlayerRelationship);
 
             var agentToPlayerRelationship = new SitecoreRelationship(new NodeReference(playerNode.Id), "AgentFor");
-            _graph.CreateRelationship(agentNode, agentToPlayerRelationship);
+            //_graph.CreateRelationship(agentNode, agentToPlayerRelationship);
 
         }
     }
