@@ -12,6 +12,6 @@ namespace Sitecore.Graph.Database
     {
         SitecoreNode ReadNode(string uri);
         SitecoreNode CreateNode(SitecoreNode node);
-        RelationshipReference CreateRelationship(NodeReference<SitecoreNode> nodeReference, SitecoreRelationship relationship);
+        RelationshipReference CreateRelationship(SitecoreNode sourceNode, SitecoreNode targetNode);
     }
 }

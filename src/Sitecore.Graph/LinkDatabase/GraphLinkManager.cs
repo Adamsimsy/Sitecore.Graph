@@ -168,21 +168,21 @@ namespace Sitecore.Graph.LinkDatabase
 
         public void Update(Item item, ItemLink link)
         {
-            var node = _graph.ReadNode(ItemHelper.ItemToUri(item));
+            var sourceNode = _graph.ReadNode(ItemHelper.ItemToUri(item));
 
-            if (node == null)
+            if (sourceNode == null)
             {
-                node = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(item), Name = item.Name });
+                sourceNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(item), Name = item.Name });
             }
 
             var targetNode = _graph.ReadNode(ItemHelper.ItemToUri(link.GetTargetItem()));
 
             if (targetNode == null)
             {
-                targetNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(link.GetTargetItem()), Name = item.Name });
+                targetNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(link.GetTargetItem()), Name = link.GetTargetItem().Name });
             }
 
-            //_graph.CreateRelationship(node, new SitecoreRelationship(targetNode, "LinksTo"));
+            _graph.CreateRelationship(sourceNode, targetNode);
         }
     }
 }

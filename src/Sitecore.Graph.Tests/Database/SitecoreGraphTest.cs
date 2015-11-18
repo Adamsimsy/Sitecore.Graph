@@ -34,10 +34,10 @@ namespace Sitecore.Graph.Tests.Database
 
             var agentNode = _graph.CreateNode(new SitecoreNode() { Uri = "3", Name = "Bloggs" });
 
-            var teamToPlayerRelationship = new SitecoreRelationship(new NodeReference(playerNode.Id), "TeamToPlayer");
+            //var teamToPlayerRelationship = new SitecoreRelationship(new NodeReference(playerNode.Id), "TeamToPlayer");
             //_graph.CreateRelationship(teamNode, teamToPlayerRelationship);
 
-            var agentToPlayerRelationship = new SitecoreRelationship(new NodeReference(playerNode.Id), "AgentFor");
+            //var agentToPlayerRelationship = new SitecoreRelationship(new NodeReference(playerNode.Id), "AgentFor");
             //_graph.CreateRelationship(agentNode, agentToPlayerRelationship);
 
         }

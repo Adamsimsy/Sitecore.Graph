@@ -52,21 +52,29 @@ namespace Sitecore.Graph.Database
             _graphClient.Connect();
 
             var newNode = _graphClient.Cypher
-                .Create("(m:Item {node})")
+                .Create("(item:Item {node})")
                 .WithParam("node", node)
-                .Return<SitecoreNode>("m")
+                .Return<SitecoreNode>("item")
                 .Results.FirstOrDefault();
 
             return newNode;
         }
 
-        public RelationshipReference CreateRelationship(NodeReference<SitecoreNode> nodeReference, SitecoreRelationship relationship)
+        public RelationshipReference CreateRelationship(SitecoreNode sourceNode, SitecoreNode targetNode)
         {
             //var client = CreateGraphClient();
 
             _graphClient.Connect();
 
-            return _graphClient.CreateRelationship(nodeReference, relationship);
+            _graphClient.Cypher
+                .Match("(item1:Item)", "(item2:Item)")
+                .Where((SitecoreNode item1) => item1.Uri == sourceNode.Uri)
+                .AndWhere((SitecoreNode item2) => item2.Uri == targetNode.Uri)
+                .Create("item1-[:LINKED_TO]->item2")
+                .ExecuteWithoutResults();
+
+
+            return null;
         }
     }
 }
