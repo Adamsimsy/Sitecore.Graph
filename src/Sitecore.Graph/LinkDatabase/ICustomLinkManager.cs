@@ -11,6 +11,8 @@ namespace Sitecore.Graph.LinkDatabase
 {
     public interface ICustomLinkManager
     {
+        string Context { get; }
+
         void Compact(Data.Database database);
         ItemLink[] GetBrokenLinks(Data.Database database);
         int GetReferenceCount(Item item);

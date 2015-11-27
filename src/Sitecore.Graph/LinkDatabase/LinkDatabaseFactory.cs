@@ -16,24 +16,22 @@ namespace Sitecore.Graph.LinkDatabase
 
         public LinkDatabaseFactory()
         {
-
-
-            _managers = new List<ICustomLinkManager>() { new GraphLinkManager() };
+            _managers = new List<ICustomLinkManager>() { new GraphLinkManager("master") };
         }
 
         public ICustomLinkManager GetContextLinkManager()
         {
-            return _managers.FirstOrDefault();
+            return _managers.SingleOrDefault(x => x.Context == Sitecore.Context.Database.Name);
         }
 
         public ICustomLinkManager GetContextLinkManager(Data.Database database)
         {
-            return _managers.FirstOrDefault();
+            return _managers.SingleOrDefault(x => x.Context == database.Name);
         }
 
         public ICustomLinkManager GetContextLinkManager(Item item)
         {
-            return _managers.FirstOrDefault();
+            return _managers.SingleOrDefault(x => x.Context == item.Database.Name);
         }
     }
 }

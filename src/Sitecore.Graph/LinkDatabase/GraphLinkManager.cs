@@ -15,14 +15,17 @@ namespace Sitecore.Graph.LinkDatabase
     {
         private readonly ISitecoreGraph _graph;
 
-        public GraphLinkManager()
+        public string Context { get; }
+
+        public GraphLinkManager(string context)
         {
             _graph = new SitecoreGraph();
+            Context = context;
         }
 
         public void Compact(Data.Database database)
         {
-            throw new NotImplementedException();
+            //Do nothing as Graph database doesn't need compacting link MSSQL
         }
 
         public ItemLink[] GetBrokenLinks(Data.Database database)
@@ -175,14 +178,21 @@ namespace Sitecore.Graph.LinkDatabase
                 sourceNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(item), Name = item.Name });
             }
 
-            var targetNode = _graph.ReadNode(ItemHelper.ItemToUri(link.GetTargetItem()));
+            var targetItem = link.GetTargetItem();
 
-            if (targetNode == null)
+            if (targetItem != null)
             {
-                targetNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(link.GetTargetItem()), Name = link.GetTargetItem().Name });
+                var targetNode = _graph.ReadNode(ItemHelper.ItemToUri(link.GetTargetItem()));
+
+                if (targetNode == null)
+                {
+                    targetNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(targetItem), Name = targetItem.Name });
+                }
+
+                _graph.CreateRelationship(sourceNode, targetNode);
             }
 
-            _graph.CreateRelationship(sourceNode, targetNode);
+            
         }
     }
 }
