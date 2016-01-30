@@ -88,6 +88,11 @@
     <Compile Include="Models\SitecoreNode.cs" />
     <Compile Include="Models\SitecoreRelationship.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relationships\BaseRelationship.cs" />
+    <Compile Include="Relationships\IRelationshipManager.cs" />
+    <Compile Include="Relationships\IRelationshipProvider.cs" />
+    <Compile Include="Relationships\RelationshipManager.cs" />
+    <Compile Include="Relationships\SitecoreTemplateRelationship.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
