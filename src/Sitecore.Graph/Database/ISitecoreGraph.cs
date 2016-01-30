@@ -12,7 +12,7 @@ namespace Sitecore.Graph.Database
     {
         SitecoreNode ReadNode(string uri);
         SitecoreNode CreateNode(SitecoreNode node);
-        RelationshipReference CreateRelationship(SitecoreNode sourceNode, SitecoreNode targetNode);
+        RelationshipReference CreateRelationship(SitecoreNode sourceNode, string relationship, SitecoreNode targetNode);
         IEnumerable<SitecoreNode> GetReferences(string v);
     }
 }

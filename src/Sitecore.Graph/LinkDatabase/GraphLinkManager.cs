@@ -7,6 +7,7 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Graph.Database;
 using Sitecore.Graph.Models;
+using Sitecore.Graph.Relationships;
 using Sitecore.Links;
 
 namespace Sitecore.Graph.LinkDatabase
@@ -14,12 +15,26 @@ namespace Sitecore.Graph.LinkDatabase
     internal class GraphLinkManager : ICustomLinkManager
     {
         private readonly ISitecoreGraph _graph;
+        private readonly IRelationshipManager _relationshipManager;
 
         public string Context { get; }
 
         public GraphLinkManager(string context)
         {
             _graph = new SitecoreGraph();
+
+            List<BaseRelationship> relationships = new List<BaseRelationship>();
+
+            relationships.Add(new SitecoreTemplateRelationship() { SubjectTemplateName = "league", Name = "league_to_team", ObjectTemplateName = "team" });
+            relationships.Add(new SitecoreTemplateRelationship() { SubjectTemplateName = "team", Name = "team_to_player", ObjectTemplateName = "player" });
+            relationships.Add(new SitecoreTemplateRelationship() { SubjectTemplateName = "newsstory", Name = "news_to_item", ObjectTemplateName = "*" });
+            relationships.Add(new SitecoreTemplateRelationship() { SubjectTemplateName = "ground", Name = "home_of_team", ObjectTemplateName = "team" });
+            relationships.Add(new SitecoreTemplateRelationship() { SubjectTemplateName = "team", Name = "team_staff", ObjectTemplateName = "staff" });
+            
+            IRelationshipProvider relationshipProvider = new RelationshipProvider(relationships);
+
+            _relationshipManager = new RelationshipManager(relationshipProvider);
+
             Context = context;
         }
 
@@ -207,7 +222,9 @@ namespace Sitecore.Graph.LinkDatabase
                     targetNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(targetItem), Name = targetItem.Name });
                 }
 
-                _graph.CreateRelationship(sourceNode, targetNode);
+                var relationship = _relationshipManager.GetRelationship(sourceNode.Uri, targetNode.Uri);
+
+                _graph.CreateRelationship(sourceNode, relationship, targetNode);
             }
 
             

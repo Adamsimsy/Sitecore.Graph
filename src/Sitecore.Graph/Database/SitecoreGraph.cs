@@ -60,7 +60,7 @@ namespace Sitecore.Graph.Database
             return newNode;
         }
 
-        public RelationshipReference CreateRelationship(SitecoreNode sourceNode, SitecoreNode targetNode)
+        public RelationshipReference CreateRelationship(SitecoreNode sourceNode, string relationship, SitecoreNode targetNode)
         {
             //var client = CreateGraphClient();
 
@@ -70,9 +70,8 @@ namespace Sitecore.Graph.Database
                 .Match("(item1:Item)", "(item2:Item)")
                 .Where((SitecoreNode item1) => item1.Uri == sourceNode.Uri)
                 .AndWhere((SitecoreNode item2) => item2.Uri == targetNode.Uri)
-                .Merge("item1-[:LINKED_TO]->item2")
+                .Merge("item1-[:" + relationship + "]->item2")
                 .ExecuteWithoutResults();
-
 
             return null;
         }

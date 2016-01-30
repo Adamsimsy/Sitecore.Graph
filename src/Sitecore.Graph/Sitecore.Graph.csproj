@@ -92,6 +92,7 @@
     <Compile Include="Relationships\IRelationshipManager.cs" />
     <Compile Include="Relationships\IRelationshipProvider.cs" />
     <Compile Include="Relationships\RelationshipManager.cs" />
+    <Compile Include="Relationships\RelationshipProvider.cs" />
     <Compile Include="Relationships\SitecoreTemplateRelationship.cs" />
   </ItemGroup>
   <ItemGroup>
