@@ -26,7 +26,7 @@ namespace Sitecore.Graph.Database
         private IGraphClient CreateGraphClient()
         {
             //Use an IoC container and register as a Singleton
-            var url = "http://192.168.99.100:32768/db/data";
+            var url = "http://192.168.99.100:32770/db/data";
             var user = "neo4j";
             var password = "Password1!";
 
@@ -75,6 +75,20 @@ namespace Sitecore.Graph.Database
 
 
             return null;
+        }
+
+        public IEnumerable<SitecoreNode> GetReferences(string uri)
+        {
+            _graphClient.Connect();
+
+            var nodes = _graphClient.Cypher
+                .OptionalMatch("(item1:Item)-[:LINKED_TO]->item2")
+                .Where("item1.Uri = {uri}")
+                .WithParam("uri", uri)
+                .Return<SitecoreNode>("item2")
+                .Results;
+
+            return nodes;
         }
     }
 }

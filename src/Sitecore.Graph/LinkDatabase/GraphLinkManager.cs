@@ -56,10 +56,13 @@ namespace Sitecore.Graph.LinkDatabase
             Assert.ArgumentNotNull((object)item, "item");
             List<ItemLink> list = new List<ItemLink>();
 
+            IEnumerable<SitecoreNode> references = _graph.GetReferences(ItemHelper.ItemToUri(item));
+            
+            //list.Add(new ItemLink(item, ));
 
                 //var items = _factory.GetContextLinkDatabaseDataManager(item).GetItemTriplesBySubject(item);
 
-                //list = SitecoreTripleHelper.TriplesToItemLinks(items);
+            //list = SitecoreTripleHelper.TriplesToItemLinks(items);
 
             return list.ToArray();
         }
@@ -127,12 +130,12 @@ namespace Sitecore.Graph.LinkDatabase
 
         public void UpdateItemVersionLink(Item item, ItemLink[] contextitemLinks)
         {
-            contextitemLinks.ToList().ForEach(x => this.Update(item, x));
+            this.UpdateLinks(item, contextitemLinks);
         }
 
         public void UpdateItemVersionLinks(Item item, ItemLink[] links)
         {
-            links.ToList().ForEach(x => this.Update(item, x));
+            this.UpdateLinks(item, links);
         }
 
         public void UpdateLinks(Item item, ItemLink[] links)
@@ -140,7 +143,22 @@ namespace Sitecore.Graph.LinkDatabase
             Assert.ArgumentNotNull((object)item, "item");
             Assert.ArgumentNotNull((object)links, "links");
 
+            var oldLinks = GetReferences(item);
+
+            var removeLinks = new List<ItemLink>();
+
+            foreach (var link in oldLinks)
+            {
+                if (!links.Any(x => x.TargetItemID.Guid == link.TargetItemID.Guid))
+                {
+                    removeLinks.Add(link);
+                }
+            }
+
+            removeLinks.ForEach(x => RemoveItemVersionLink(x));
+
             links.ToList().ForEach(x => this.Update(item, x));
+
 
             //var allLinks = _computedLinkManager.GetComputedLinkItems(item);
 
