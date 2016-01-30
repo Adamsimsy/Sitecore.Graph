@@ -26,7 +26,7 @@ namespace Sitecore.Graph.Database
         private IGraphClient CreateGraphClient()
         {
             //Use an IoC container and register as a Singleton
-            var url = "http://192.168.99.100:32770/db/data";
+            var url = "";
             var user = "neo4j";
             var password = "Password1!";
 
