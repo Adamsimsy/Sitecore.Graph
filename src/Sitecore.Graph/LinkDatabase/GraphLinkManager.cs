@@ -206,6 +206,11 @@ namespace Sitecore.Graph.LinkDatabase
         {
             var sourceNode = _graph.ReadNode(ItemHelper.ItemToUri(item));
 
+            if (FilterItem(item))
+            {
+                return;
+            }
+
             if (sourceNode == null)
             {
                 sourceNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(item), Name = item.Name });
@@ -215,6 +220,11 @@ namespace Sitecore.Graph.LinkDatabase
 
             if (targetItem != null)
             {
+                if (FilterItem(targetItem))
+                {
+                    return;
+                }
+
                 var targetNode = _graph.ReadNode(ItemHelper.ItemToUri(link.GetTargetItem()));
 
                 if (targetNode == null)
@@ -228,6 +238,12 @@ namespace Sitecore.Graph.LinkDatabase
             }
 
             
+        }
+
+        private bool FilterItem(Item item)
+        {
+            //Should add functionality to add configure filters. For now hard code so only index stuff under content.
+            return !item.Paths.FullPath.ToLower().StartsWith("/sitecore/content/home");
         }
     }
 }
