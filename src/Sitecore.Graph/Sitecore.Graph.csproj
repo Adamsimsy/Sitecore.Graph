@@ -77,6 +77,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComputedRelationships\AncestorComputedLinkItem.cs" />
+    <Compile Include="ComputedRelationships\DescendantComputedLinkItem.cs" />
+    <Compile Include="ComputedRelationships\IComputedLinkItem.cs" />
+    <Compile Include="ComputedRelationships\IComputedLinkManager.cs" />
+    <Compile Include="ComputedRelationships\SitecoreComputedLinkManager.cs" />
     <Compile Include="Database\ISitecoreGraph.cs" />
     <Compile Include="Database\SitecoreGraph.cs" />
     <Compile Include="ItemHelper.cs" />

@@ -5,6 +5,7 @@ using Sitecore.Collections;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Graph.ComputedRelationships;
 using Sitecore.Graph.Database;
 using Sitecore.Graph.Models;
 using Sitecore.Graph.Relationships;
@@ -16,12 +17,20 @@ namespace Sitecore.Graph.LinkDatabase
     {
         private readonly ISitecoreGraph _graph;
         private readonly IRelationshipManager _relationshipManager;
+        private readonly IComputedLinkManager _computedLinkManager;
 
         public string Context { get; }
 
         public GraphLinkManager(string context)
         {
             _graph = new SitecoreGraph();
+
+            var computedLinkItems = new List<IComputedLinkItem>();
+
+            computedLinkItems.Add(new AncestorComputedLinkItem("team", "ground"));
+            computedLinkItems.Add(new DescendantComputedLinkItem("staff", "team"));
+
+            _computedLinkManager = new SitecoreComputedLinkManager(computedLinkItems);
 
             List<BaseRelationship> relationships = new List<BaseRelationship>();
 
@@ -172,12 +181,11 @@ namespace Sitecore.Graph.LinkDatabase
 
             removeLinks.ForEach(x => RemoveItemVersionLink(x));
 
-            links.ToList().ForEach(x => this.Update(item, x));
+            var allLinks = _computedLinkManager.GetComputedLinkItems(item);
 
+            allLinks.AddRange(links);
 
-            //var allLinks = _computedLinkManager.GetComputedLinkItems(item);
-
-            //allLinks.AddRange(links);
+            allLinks.ToList().ForEach(x => this.Update(item, x));
 
             //foreach (var manager in _factory.GetContextSitecoreLinkedDataManagers(item))
             //{
