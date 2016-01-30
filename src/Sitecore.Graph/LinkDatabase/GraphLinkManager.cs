@@ -204,16 +204,9 @@ namespace Sitecore.Graph.LinkDatabase
 
         public void Update(Item item, ItemLink link)
         {
-            var sourceNode = _graph.ReadNode(ItemHelper.ItemToUri(item));
-
             if (FilterItem(item))
             {
                 return;
-            }
-
-            if (sourceNode == null)
-            {
-                sourceNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(item), Name = item.Name });
             }
 
             var targetItem = link.GetTargetItem();
@@ -223,6 +216,13 @@ namespace Sitecore.Graph.LinkDatabase
                 if (FilterItem(targetItem))
                 {
                     return;
+                }
+
+                var sourceNode = _graph.ReadNode(ItemHelper.ItemToUri(item));
+
+                if (sourceNode == null)
+                {
+                    sourceNode = _graph.CreateNode(new SitecoreNode() { Uri = ItemHelper.ItemToUri(item), Name = item.Name });
                 }
 
                 var targetNode = _graph.ReadNode(ItemHelper.ItemToUri(link.GetTargetItem()));
